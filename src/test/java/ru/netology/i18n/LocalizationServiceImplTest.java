@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import ru.netology.entity.Country;
 import ru.netology.entity.Location;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -18,18 +19,13 @@ class LocalizationServiceImplTest {
     @Test
     void testReturnTest(){
 
-        Country country1 = Country.RUSSIA;
-        Country country2 = Country.USA;
+        Country country = Country.RUSSIA;
+        
+        Location location = Mockito.mock(Location.class);
+        when(location.getCountry()).thenReturn(country);
 
-        LocalizationServiceImpl localizationService = Mockito.mock(LocalizationServiceImpl.class);
-        when(localizationService.locale(Country.RUSSIA)).thenReturn("Добро пожаловать");
-        when(localizationService.locale(Country.USA)).thenReturn("Welcome");
-        Assertions.assertEquals("Добро пожаловать", localizationService.locale(country1));
-        Assertions.assertNotEquals("Welcome", localizationService.locale(country1));
-        Assertions.assertEquals("Welcome", localizationService.locale(country2));
-
-        //LocalizationService localizationService1 = new LocalizationServiceImpl();
-        //String result = localizationService1.locale(Country.RUSSIA);
-        //Assertions.assertEquals("Добро пожаловать", result);
+        LocalizationService localizationService1 = new LocalizationServiceImpl();
+        String result = localizationService1.locale(location.getCountry());
+        Assertions.assertEquals("Добро пожаловать", result);
     }
 }
